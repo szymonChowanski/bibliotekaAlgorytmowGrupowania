@@ -1,0 +1,69 @@
+﻿<Window x:Class="ProjektInżynierski.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProjektInżynierski"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="383*"/>
+        </Grid.RowDefinitions>
+        
+        <!--Prostokąty do podziału okna-->
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="129" Stroke="Black" VerticalAlignment="Top" Width="393" Grid.RowSpan="2" Margin="0,2,0,0"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="154" Margin="0,94,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="393"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="359" Margin="393,2,-0.4,0" Stroke="Black" VerticalAlignment="Top" Width="401" Grid.RowSpan="2"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="59" Margin="0,324.2,-0.4,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="794"/>
+            <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="76" Margin="0,248,0,0" Grid.Row="1" Stroke="Black" VerticalAlignment="Top" Width="393"/>
+
+        <!--Wybór algorytmów-->
+            <Label Content="Wybór algorytmów" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="2.573,0.687" Margin="17,-3,0,0"/>
+            <Label Content="Algorytm Hierarchiczny Aglomeracyjny" HorizontalAlignment="Left" Margin="28,21,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+            <CheckBox x:Name="KmeansCheckbox" Content="Algorytm k-średnich" HorizontalAlignment="Left" Margin="33,22,0,0" VerticalAlignment="Top" Checked="KmeansCheckbox_Checked" Unchecked="KmeansCheckbox_Unchecked"/>
+            <CheckBox x:Name="SingleLinkCheckbox" Content="Single-Linkage" HorizontalAlignment="Left" Margin="41,44,0,0" VerticalAlignment="Top" Checked="SingleLinkCheckbox_Checked" Unchecked="SingleLinkCheckbox_Unchecked" Grid.Row="1"/>
+            <CheckBox x:Name="JarvisPatrickCheckbox" Content="Algorytm Jarvisa-Patricka" HorizontalAlignment="Left" Margin="33,6,0,0" VerticalAlignment="Top" Checked="JarvisPatrickCheckbox_Checked" Unchecked="JarvisPatrickCheckbox_Unchecked" Grid.Row="1"/>
+            <CheckBox x:Name="AverageLinkCheckbox" Content="Average-Linkage" HorizontalAlignment="Left" Margin="41,74,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="AverageLinkCheckbox_Checked" Unchecked="AverageLinkCheckbox_Unchecked"/>
+            <CheckBox x:Name="CompleteLinkCheckbox" Content="Complete-Linkage" HorizontalAlignment="Left" Margin="41,59,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="CompleteLinkCheckbox_Checked" Unchecked="CompleteLinkCheckbox_Unchecked" />
+
+        <!--Wybór danych wejściowych-->
+            <Label Content="Dane wejściowe" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="23,94,0,0" Grid.Row="1" RenderTransformOrigin="0.465,0.885"/>
+            <TextBox x:Name="QuantityInputTextBox" HorizontalAlignment="Left" Height="23" Margin="217,166,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Grid.Row="1"/>
+            <Label x:Name="QuantityOfRandomDataLabel" Content="Ilość danych wejściowych" HorizontalAlignment="Left" Margin="60,163,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+            <Button x:Name="FileOpenButton" Content="Wybierz plik wejściowy" HorizontalAlignment="Left" Margin="174,122,0,0" VerticalAlignment="Top" Width="137" Click="FileOpenButton_Click" Grid.Row="1" RenderTransformOrigin="0.077,0.688"/>
+            <Button x:Name="BitmapOpenButton" Content="Wybierz plik wejściowy" HorizontalAlignment="Left" Margin="174,223,0,0" Grid.Row="1" VerticalAlignment="Top" Width="137" Click="BitmapOpenButton_Click"/>
+            <Label x:Name="DimensionLabel" Content="Ilość wymiarów przestrzenii" HorizontalAlignment="Left" Margin="60,189,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <TextBox x:Name="DimensionTextBox" HorizontalAlignment="Left" Height="23" Margin="217,192,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" RenderTransformOrigin="0.506,-0.232" TextChanged="DimensionTextBox_TextChanged"/>
+            
+            <RadioButton x:Name="FromBitmapRadioButton" GroupName="inputRadioButtons" Content="Z pliku graficznego" HorizontalAlignment="Left" Margin="41,223,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="FromBitmapRadioButton_Checked"/>
+            <RadioButton x:Name="FromFileRadioButton" GroupName="inputRadioButtons" Content="Z pliku tekstowego" HorizontalAlignment="Left" Margin="41,125,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.184,0.368" Grid.Row="1" Checked="FromFileRadioButton_Checked"/>
+            <RadioButton x:Name="RandomDataRadioButton"  GroupName="inputRadioButtons" Content="Dane losowe" HorizontalAlignment="Left" Margin="41,144,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.052,-0.171" Grid.Row="1" Checked="RandomDataRadioButton_Checked"/>
+
+        <!--Parametry konfiguracyjne algorytmów i funkcji obliczania dystansu między punktami-->
+            <Label x:Name="KmeansLabel" Content="Algorytm k-średnich" HorizontalAlignment="Left" Margin="426,28,0,0" VerticalAlignment="Top" Grid.RowSpan="2" IsEnabled="False"/>
+            <Label x:Name="KmeansGroupsLabel" Content="Ilość grup" HorizontalAlignment="Left" Margin="438,11.2,0,0" VerticalAlignment="Top" IsEnabled="False" Grid.Row="1"/>
+            <TextBox x:Name="GroupQuantityTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="52
+                     " Margin="671,14.2,0,0" IsEnabled="False" RenderTransformOrigin="0.5,1.452" Grid.Row="1"/>
+            <Label x:Name="ConfigurationLabel" Content="Konfiguracja algorytmów" HorizontalAlignment="Left" Margin="409,2,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="JarvisPatrickLabel" Content="Algorytm Jarvisa-Patricka" HorizontalAlignment="Left" Margin="426,76.2,0,0" Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>
+            <Label x:Name="NeighborsToExamineLabel" Content="Liczba sąsiadów do sprawdzenia" HorizontalAlignment="Left" Margin="438,103.2,0,0" Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>
+            <TextBox x:Name="NeighborsToExamineTextBox" HorizontalAlignment="Left" Height="23" Margin="671,106.2,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" RenderTransformOrigin="0.335,-0.157" IsEnabled="False"/>
+            <Label x:Name="NeighborsInCommonLabel" Content="Minimalna liczba wspólnych sąsiadów" HorizontalAlignment="Left" Margin="438,133.2,0,0" Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>
+            <TextBox x:Name="NeighborsInCommonTextBox" HorizontalAlignment="Left" Height="23" Margin="671,137.2,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" RenderTransformOrigin="0.335,-0.157" IsEnabled="False"/>
+            <Label Content="Funkcja Dystansu" HorizontalAlignment="Left" Margin="426,192.2,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <!--<Label x:Name="HierarchicalLabel" Content="Algorytm hierarchiczny" HorizontalAlignment="Left" Margin="426,44.2,0,0" Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>-->
+
+            <ComboBox x:Name="DistanceFunctionComboBox" HorizontalAlignment="Left" Margin="603,195.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="DistanceFunctionComboBox_SelectionChanged"/>
+
+        <!--Konfiguracja danych wyjściowych i włączanie wizualizacji-->
+            <Label Content="Dane wyjściowe" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="17,248,0,0" Grid.Row="1"/>
+            <Button x:Name="OutputFilePathButton" Content="Wybierz plik wyjściowy" HorizontalAlignment="Left" VerticalAlignment="Top" Width="137" Margin="139,299,0,0" Grid.Row="1" Click="OutputFilePathButton_Click"/>
+            <CheckBox x:Name="VisualisationCheckbox" Content="Wizualizacja(tylko dla danych dwuwymiarowych)" HorizontalAlignment="Left" Margin="35,279,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="VisualisationCheckbox_Checked" Unchecked="VisualisationCheckbox_Unchecked"/>
+        
+        <!--Start button-->
+            <Button x:Name="StartButton" Content="Start" HorizontalAlignment="Left" Margin="355,344.2,0,0" VerticalAlignment="Top" Width="75" Click="StartButton_Click" Grid.Row="1"/>
+
+    </Grid>
+</Window>
