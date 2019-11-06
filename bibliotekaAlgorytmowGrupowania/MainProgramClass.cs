@@ -12,21 +12,20 @@ namespace ProjektInżynierski
 {
     public class MainProgramClass
     {
-        //private ProcessingData processing;
         private List<DataPoint> points;
-
         public ProcessingData processingData;//{ get => processingData; set => processingData = value; }
         internal List<DataPoint> Points { get => points; set => points = value; }
 
         public MainProgramClass()
         {
-            processingData = new ProcessingData();
+            processingData = new ProcessingData(); 
             points = new List<DataPoint>();
         }
 
         public MainProgramClass(ProcessingData Data)
         {
             processingData = Data;
+            WriteToFile.Path = processingData.OutputFilePath;
             points = new List<DataPoint>();
         }
 
@@ -39,70 +38,7 @@ namespace ProjektInżynierski
                 ReadFromBitmap();
             else GenerateRandomData();
 
-
-            WriteToFile();
-            //wywołanie algorytmów grupowania
-            //if (processingData.AlgorithmChecklist[0])
-            //{
-            //    DataClustering kMeans = new KMeans(this);
-            //    kMeans.Clustering();
-            //    if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
-            //    {
-            //        WindowToDraw kMeansVisualisation = new WindowToDraw(kMeans,"kmeans");
-            //        kMeansVisualisation.Show();
-
-            //    }
-            //    WriteToFile(kMeans, "kmeans");
-            //}
-
-            //if (processingData.AlgorithmChecklist[1])
-            //{
-            //    DataClustering hierarchical = new SingleLinkageHierarchical(this);
-            //    if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
-            //    {
-            //        WindowToDraw hierarchicalVisualisation = new WindowToDraw(hierarchical, "hierarchical");
-            //        hierarchicalVisualisation.Show();
-
-            //    }
-            //}
-            ////hierarchical
-            //if (processingData.AlgorithmChecklist[2])
-            //{
-            //    DataClustering jarvisPatrick = new JarvisPatrick(this);
-            //    jarvisPatrick.Clustering();
-            //    if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
-            //    {
-            //        WindowToDraw jarvisPatrickVisualisation = new WindowToDraw(jarvisPatrick,"jarvis-patrick");
-            //        jarvisPatrickVisualisation.Show();
-
-            //    }
-            //    WriteToFile(jarvisPatrick, "jarvis-patrick");
-            //}
-            //if (processingData.AlgorithmChecklist[1])
-            //{
-            //    DataClustering hierarchical = new SingleLinkageHierarchical(this);
-            //    if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
-            //    {
-            //        WindowToDraw hierarchicalVisualisation = new WindowToDraw(hierarchical, "hierarchical");
-            //        hierarchicalVisualisation.Show();
-
-            //    }
-            //}
-            ////hierarchical
-            //if (processingData.AlgorithmChecklist[2])
-            //{
-            //    DataClustering jarvisPatrick = new JarvisPatrick(this);
-            //    jarvisPatrick.Clustering();
-            //    if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
-            //    {
-            //        WindowToDraw jarvisPatrickVisualisation = new WindowToDraw(jarvisPatrick,"jarvis-patrick");
-            //        jarvisPatrickVisualisation.Show();
-
-            //    }
-            //    WriteToFile(jarvisPatrick, "jarvis-patrick");
-            //}
-
-           
+            WriteToFile.Header(points);
             List<DataClustering> algorithmList = new List<DataClustering>();
 
             for(int i = 0; i < processingData.AlgorithmChecklist.Length;i++)
@@ -128,8 +64,6 @@ namespace ProjektInżynierski
                             break;
                     }
                 }
-                
- 
             }
 
 
@@ -138,71 +72,23 @@ namespace ProjektInżynierski
                 DataClustering data = algorithm as Hierarchical;
                 if (data == null)
                     algorithm.Clustering();
+
                 if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
                 {
                     WindowToDraw visualisationWindow = new WindowToDraw(algorithm);
                     visualisationWindow.Show();
                 }
-                WriteToFile(algorithm, "kmeans");
-
-            }
-        }
-
-        private void WriteToFile()
-        {
-                using (StreamWriter sw = File.CreateText(processingData.OutputFilePath))
-                {
-                    sw.WriteLine("Plik wynikowy programu Biblioteka Algorytmów Grupowania \r");
-                    sw.WriteLine();
-                    sw.WriteLine("Punkty: ");
-                    foreach(DataPoint point in Points)
-                    {
-                        sw.Write("[{0}]:", point.Index);
-                        foreach(double number in point.Coordinates)
-                        {
-                            sw.Write("{0} ", number);
-                        }
-                        sw.WriteLine();
-                    }
-                    sw.WriteLine();
-                    sw.WriteLine();
-            }
-        }
-
-        private void WriteToFile(DataClustering clustering,string algorithm)
-        {
-            using (StreamWriter sw = File.AppendText(processingData.OutputFilePath))
-            {
-                if (algorithm == "kmeans")
-                    sw.WriteLine("Algorytm k-średnich");
-                else if (algorithm == "jarvis-patrick")
-                    sw.WriteLine("Algorytm Jarvisa-Patricka");
                 else
-                {
-                    sw.WriteLine("Algorytm hierarchiczny");
-                }
-                int index=0;
-                foreach(Cluster cluster in clustering.Clusters)
-                {
-                    sw.WriteLine("Cluster {0}:", index++);
-                    if (algorithm == "kmeans")
+                    while(algorithm.Finished != true)
                     {
-                        sw.Write("Centroid: ");
-                        foreach(double number in cluster.Centroid.Coordinates)
-                        {
-                            sw.Write("{0} ", number);
-                        }
-                        sw.WriteLine();
+                        algorithm.Clustering();
                     }
-                    sw.Write("Points:");
-                    foreach (DataPoint point in cluster.Points)
-                        sw.Write("[{0}] ", point.Index);
-                    sw.WriteLine();
-                }
-                sw.WriteLine();
-                sw.WriteLine();
+
+                WriteToFile.Algorithm(algorithm);
             }
         }
+
+        
         public void GenerateRandomData()
         {
             Random rand = new Random();
@@ -215,6 +101,7 @@ namespace ProjektInżynierski
                 points[i].Index = index++;
             }
         }
+
         public void ReadFromFile()
         {
 
@@ -233,7 +120,6 @@ namespace ProjektInżynierski
                         continue;
                     else
                     {
-
                         for (int j = 0; j < lines[i].Length; j++)
                         {
                             if ((lines[i][j].Equals(',')) && (counter > 0))
@@ -248,20 +134,20 @@ namespace ProjektInżynierski
                             }
                             else counter++;
                         }
+
                         Points.Add(new DataPoint(new List<double>(tmp)));
                         Points[index].Index = index++;
                         processingData.PointsQuantity++;
                         tmp.Clear();
-                    }
-                
+                    }   
             }
-            
         }
 
         public void ReadFromBitmap()
         {
             Bitmap bitmap = new Bitmap(processingData.InputFilePath);
             Color tmpColor;
+
             for(int y = 0;y<bitmap.Height;y++)
             {
                 for (int x = 0; x < bitmap.Height; x++)
@@ -271,13 +157,6 @@ namespace ProjektInżynierski
                         Points.Add(new DataPoint(x, y));
                 }
             }
-        }
-      
-        
-
-        public void Nop()
-        {
-            return;
         }
     }
 }

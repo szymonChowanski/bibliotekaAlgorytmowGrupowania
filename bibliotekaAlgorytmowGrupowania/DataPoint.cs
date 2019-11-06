@@ -18,22 +18,17 @@ namespace ProjektInżynierski
         public List<DataPoint> NearestNeighbors { get => _nearestNeighbors; set => _nearestNeighbors = value; }
         private int _clusterIndex=-1;
         public int ClusterIndex { get => _clusterIndex; set => _clusterIndex = value; }
+
         
-        
+        public DataPoint() {}
 
-        public DataPoint(List<double> numbers)
-        {
-            Coordinates = numbers;
-        }
-
-        public DataPoint()
-        {
-        }
-
+        public DataPoint(List<double> numbers) => Coordinates = numbers;
+ 
         public DataPoint(DataPoint previous)
         {
             foreach (double number in previous._coordinates)
-                this._coordinates.Add(number);            
+                this._coordinates.Add(number);
+            Index = previous.Index;
         }
 
         public DataPoint (int x,int y)
@@ -46,15 +41,15 @@ namespace ProjektInżynierski
         {
             if (_coordinates.Count != another._coordinates.Count)
                 return false;
+
             if (_coordinates.Count == 0)
                 return true;
+
             for (int i = 0; i < _coordinates.Count; i++)
                 if (_coordinates[i] != another._coordinates[i])
                     return false;
+
             return true;
         }
-
-
-
     }
 }

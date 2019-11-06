@@ -75,6 +75,7 @@
     <Compile Include="WindowToDraw.xaml.cs">
       <DependentUpon>WindowToDraw.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WriteToFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainProgramClass.cs" />

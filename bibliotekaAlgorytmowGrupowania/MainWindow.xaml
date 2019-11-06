@@ -52,10 +52,13 @@
             <TextBox x:Name="NeighborsToExamineTextBox" HorizontalAlignment="Left" Height="23" Margin="671,106.2,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" RenderTransformOrigin="0.335,-0.157" IsEnabled="False"/>
             <Label x:Name="NeighborsInCommonLabel" Content="Minimalna liczba wspólnych sąsiadów" HorizontalAlignment="Left" Margin="438,133.2,0,0" Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>
             <TextBox x:Name="NeighborsInCommonTextBox" HorizontalAlignment="Left" Height="23" Margin="671,137.2,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" RenderTransformOrigin="0.335,-0.157" IsEnabled="False"/>
-            <Label Content="Funkcja Dystansu" HorizontalAlignment="Left" Margin="426,192.2,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            
             <!--<Label x:Name="HierarchicalLabel" Content="Algorytm hierarchiczny" HorizontalAlignment="Left" Margin="426,44.2,0,0" Grid.Row="1" VerticalAlignment="Top" IsEnabled="False"/>-->
 
-            <ComboBox x:Name="DistanceFunctionComboBox" HorizontalAlignment="Left" Margin="603,195.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="DistanceFunctionComboBox_SelectionChanged"/>
+            <!--<Label Content="Funkcja Dystansu" HorizontalAlignment="Left" Margin="426,192.2,0,0" Grid.Row="1" VerticalAlignment="Top"/>-->
+            <!--<ComboBox x:Name="DistanceFunctionComboBox" HorizontalAlignment="Left" Margin="603,195.2,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" SelectionChanged="DistanceFunctionComboBox_SelectionChanged">
+                <ComboBoxItem Name="EuclideanCBItem" IsSelected="True">Odległość Euklidesowa</ComboBoxItem>
+            </ComboBox>>-->
 
         <!--Konfiguracja danych wyjściowych i włączanie wizualizacji-->
             <Label Content="Dane wyjściowe" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="17,248,0,0" Grid.Row="1"/>

@@ -8,7 +8,7 @@
         Title="WindowToDraw" Height="700" Width="640" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
     <Grid HorizontalAlignment="Left" Height="690" Margin="0,0,0,-19" VerticalAlignment="Top" Width="630">
 
-        <Button x:Name="NextStepButton" Content="Button" HorizontalAlignment="Left" Margin="254,636,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.8,15.6" Click="NextStepButton_Click"/>
+        <Button x:Name="NextStepButton" Content="Kolejna iteracja" HorizontalAlignment="Left" Margin="269,636,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.8,15.6" Click="NextStepButton_Click"/>
         <StackPanel x:Name="ImageStackPanel" HorizontalAlignment="Left" Height="631" VerticalAlignment="Top" Width="620"/>
     </Grid>
 

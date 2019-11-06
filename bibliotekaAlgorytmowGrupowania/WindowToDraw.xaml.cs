@@ -24,11 +24,13 @@ namespace ProjektInżynierski
         GeometryDrawing coordinatesDrawing = new GeometryDrawing();
         //List<Cluster> clusters;
         DataClustering dataClustering;
+        int iteration = 0;
 
         public WindowToDraw(DataClustering clustering)
         {
             InitializeComponent();
             dataClustering = clustering;
+            SetTitle();
             drawStart();
             drawPoints();
             drawFinish();
@@ -163,8 +165,24 @@ namespace ProjektInżynierski
             drawFinish();
         }
 
+        public void SetTitle()
+        {
+            DataClustering[] algorithms = { dataClustering as KMeans,
+                                            dataClustering as JarvisPatrick,
+                                            dataClustering as SingleLinkageHierarchical,
+                                            dataClustering as AverageLinkageHierarchical,
+                                            dataClustering as CompleteLinkageHierarchical};
+            Title = "Wizualizacja algorytmu ";
+            if (algorithms[0]!=null) Title += "k-średnich";
+            else if (algorithms[1] != null) Title += "Jarvisa-Patricka";
+            else if (algorithms[2] != null) Title += "hierarchiczny aglomeracyjny z miarą odległości single-link";
+            else if (algorithms[3] != null) Title += "hierarchiczny aglomeracyjny z miarą odległości average-link";
+            else  Title += "hierarchiczny aglomeracyjny z miarą odległości complete-link";
+        }
+
         private void NextStepButton_Click(object sender, RoutedEventArgs e)
         {
+            
             if(!dataClustering.Finished)
             {
                 dataClustering.Clustering();
@@ -172,6 +190,7 @@ namespace ProjektInżynierski
             }
             if (dataClustering.Finished)
                 NextStepButton.Visibility = Visibility.Collapsed;
+            
         }
     }
 }

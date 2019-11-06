@@ -16,10 +16,7 @@ namespace ProjektInżynierski
         {
 
         }
-        //public override void Clustering()
-        //{
 
-        //}
         public override double Linkage(Cluster cluster1, Cluster cluster2)
         {
             double clusterDistance = 0;

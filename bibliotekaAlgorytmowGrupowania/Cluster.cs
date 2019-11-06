@@ -10,28 +10,32 @@ namespace ProjektInżynierski
     public class Cluster
     {
         private Color _colorOnChart = Colors.White;
-        private List<DataPoint> _points = new List<DataPoint>();
-        private DataPoint _centroid = new DataPoint();
 
-        public Color ColorOnChart { get => _colorOnChart; set => _colorOnChart = value; }
+        private List<DataPoint> _points = new List<DataPoint>();
         internal List<DataPoint> Points { get => _points; set => _points = value; }
+
+        private DataPoint _centroid = new DataPoint();
         internal DataPoint Centroid { get => _centroid; set => _centroid = value; }
 
-        public Cluster()
-        {
+        public Color ColorOnChart { get => _colorOnChart; set => _colorOnChart = value; }
+        
+        
 
-        }
-
-        public void SetColor()
-        {
-            //Random rand = new Random();
-            //ColorOnChart = Color.FromRgb((byte)rand.Next(0, 256), (byte)rand.Next(0, 256), (byte)rand.Next(0, 256));
-            //Color.
-
-            ColorOnChart = (Color)ColorConverter.ConvertFromString(MyColors.GetColor());
-        }
+        public Cluster(){}
 
         public Cluster(DataPoint centroid) => _centroid = centroid;
+        
+        public Cluster(Cluster another)
+        {
+            foreach(DataPoint anotherPoint in another.Points)
+            {
+                Points.Add(new DataPoint(anotherPoint));
+            }
+        }
+
+
+        public void SetColor() => ColorOnChart = (Color)ColorConverter.ConvertFromString(MyColors.GetColor());
+
 
         public bool Equals(Cluster another)
         {
@@ -44,7 +48,6 @@ namespace ProjektInżynierski
             for(int i = 0;i<_points.Count;i++)
                 if (!(_points[i].Index == another._points[i].Index))
                     return false;
-
             return true;
         }
     }

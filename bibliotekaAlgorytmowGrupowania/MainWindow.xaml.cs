@@ -14,15 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 
-
-
-/// <summary>
-///
-/// 
-/// </summary>
-/// 
-
-
 namespace ProjektInżynierski
 {
     
@@ -41,12 +32,12 @@ namespace ProjektInżynierski
         {
             if(_startAlreadyClicked)
             {
-                //main.processingData.ResetNumeric();
                 ProcessingData oldProcessingData = main.processingData;
-                main = new MainProgramClass(oldProcessingData);
-                
+                main = new MainProgramClass(oldProcessingData);   
             }
+
             _startAlreadyClicked = true;
+
             for(int i = 0;i<3;i++)
             {
                 if (main.processingData.AlgorithmChecklist[i] == true)
@@ -57,20 +48,24 @@ namespace ProjektInżynierski
                     return;
                 }
             }
+
             if((RandomDataRadioButton.IsChecked==false) && (FromFileRadioButton.IsChecked==false)&&(FromBitmapRadioButton.IsChecked==false))
             {
                 MessageBox.Show("Proszę wybrać typ danych wejściowych");
                 return;
             }
+
             if(((FromFileRadioButton.IsChecked==true)||(FromBitmapRadioButton.IsChecked==true))&&(main.processingData.InputFilePath==""))
             {
                 MessageBox.Show("Proszę wybrać plik wejściowy");
                 return;
             }
+
             if(main.processingData.OutputFilePath=="result.txt")
             {
                 MessageBox.Show("Nie wybrano pliku. Wyniki zostaną zapisane w domyślnym pliku result.txt");
             }
+
             if(RandomDataRadioButton.IsChecked==true)
                 try
                 {
@@ -95,6 +90,7 @@ namespace ProjektInżynierski
                     MessageBox.Show("Proszę wpisać liczbę całkowitą.");
                     return;
                 }
+
             if (JarvisPatrickCheckbox.IsChecked == true)
                 try
                 {
@@ -110,9 +106,6 @@ namespace ProjektInżynierski
 
 
             main.Setup();
-           
-            
-
         }
 
         private void KmeansCheckbox_Checked(object sender, RoutedEventArgs e)
@@ -121,7 +114,6 @@ namespace ProjektInżynierski
             KmeansGroupsLabel.IsEnabled = true;
             GroupQuantityTextBox.IsEnabled = true;
             main.processingData.AlgorithmChecklist[0] = true;
-
         }
 
         private void KmeansCheckbox_Unchecked(object sender, RoutedEventArgs e)
@@ -183,113 +175,87 @@ namespace ProjektInżynierski
             NeighborsInCommonTextBox.IsEnabled = false;
             NeighborsToExamineLabel.IsEnabled = false;
             NeighborsToExamineTextBox.IsEnabled = false;
+
             main.processingData.AlgorithmChecklist[2] = false;
         }
 
-        private void FileOpenButton_Click(object sender, RoutedEventArgs e)
+        private void FileOpen(ref string processingDataReference, string filter)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Text files (*.arff)|*.arff|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog()==true)
+            openFileDialog.Filter = filter;
+
+            if (openFileDialog.ShowDialog() == true)
             {
-                main.processingData.InputFilePath = openFileDialog.FileName;
+                processingDataReference = openFileDialog.FileName;
             }
         }
 
-        private void BitmapOpenButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Image Files(*.BMP)|*.BMP|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                main.processingData.InputFilePath = openFileDialog.FileName;
-            }
-        }
-
-        private void OutputFilePathButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                main.processingData.OutputFilePath = openFileDialog.FileName;
-            }
-        }
+        private void FileOpenButton_Click(object sender, RoutedEventArgs e) => FileOpen(ref main.processingData.InputFilePath, "Text files (*.arff)|*.arff|All files (*.*)|*.*");
+        private void BitmapOpenButton_Click(object sender, RoutedEventArgs e) => FileOpen(ref main.processingData.InputFilePath, "Image Files(*.BMP)|*.BMP|All files (*.*)|*.*");
+        private void OutputFilePathButton_Click(object sender, RoutedEventArgs e) => FileOpen(ref main.processingData.OutputFilePath, "Text files (*.txt)|*.txt|All files (*.*)|*.*");
+        
 
         private void FromFileRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            main.processingData.InputFilePath = "";
+            VisualisationCheckbox.IsEnabled = true;
+            BitmapOpenButton.IsEnabled = false;
             QuantityInputTextBox.IsEnabled = false;
             QuantityOfRandomDataLabel.IsEnabled = false;
             FileOpenButton.IsEnabled = true;
             DimensionLabel.IsEnabled = false;
             DimensionTextBox.IsEnabled = false;
-            main.processingData.readFromFile = true;
-            VisualisationCheckbox.IsEnabled = true;
-            BitmapOpenButton.IsEnabled = false;
+            
             main.processingData.readFromBitmap = false;
-
+            main.processingData.InputFilePath = "";
+            main.processingData.readFromFile = true;
         }
 
         private void RandomDataRadioButton_Checked(object sender, RoutedEventArgs e)
         {
+            VisualisationCheckbox.IsEnabled = false;
+            BitmapOpenButton.IsEnabled = false;
             QuantityInputTextBox.IsEnabled = true;
             QuantityOfRandomDataLabel.IsEnabled = true;
             FileOpenButton.IsEnabled = false;
             DimensionLabel.IsEnabled = true;
             DimensionTextBox.IsEnabled = true;
-            main.processingData.readFromFile = false;
-           
-            VisualisationCheckbox.IsEnabled = false;
-            BitmapOpenButton.IsEnabled = false;
+            
             main.processingData.readFromBitmap = false;
+            main.processingData.readFromFile = false;
         }
 
         private void FromBitmapRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            main.processingData.InputFilePath = "";
+        {           
             QuantityInputTextBox.IsEnabled = false;
             QuantityOfRandomDataLabel.IsEnabled = false;
             FileOpenButton.IsEnabled = false;
-            DimensionLabel.IsEnabled = false;
-            main.processingData.readFromFile = false;
+            DimensionLabel.IsEnabled = false;            
             DimensionTextBox.IsEnabled = false;
             VisualisationCheckbox.IsEnabled = true;
             BitmapOpenButton.IsEnabled = true;
+
             main.processingData.readFromBitmap = true;
             main.processingData.dimensionQuantity = 2;
+            main.processingData.InputFilePath = "";
+            main.processingData.readFromFile = false;
         }
 
+        private void VisualisationCheckbox_Checked(object sender, RoutedEventArgs e) => main.processingData.Visualization = true;
 
+        private void VisualisationCheckbox_Unchecked(object sender, RoutedEventArgs e) => main.processingData.Visualization = false;
 
-
-        private void VisualisationCheckbox_Checked(object sender, RoutedEventArgs e)
-        {
-            main.processingData.Visualization = true;
-        }
-
-        private void VisualisationCheckbox_Unchecked(object sender, RoutedEventArgs e)
-        {
-            main.processingData.Visualization = false;
-        }
 
         private void DistanceFunctionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
            // main.processingData.DistanceFunction = DistanceFunctionComboBox.GetValue(null);
         }
 
-        public static void ShowMessage(string message)
-        {
-            MessageBox.Show(message);
-        }
+        public static void ShowMessage(string message) => MessageBox.Show(message);
 
         private void DimensionTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
+        {            
             if (int.Parse(DimensionTextBox.Text) == 2)
                 VisualisationCheckbox.IsEnabled = true;
-        }
-
-        
+        }       
     }
 }

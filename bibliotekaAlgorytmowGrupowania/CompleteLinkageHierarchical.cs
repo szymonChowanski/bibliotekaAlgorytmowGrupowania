@@ -10,14 +10,8 @@ namespace ProjektInżynierski
     class CompleteLinkageHierarchical : Hierarchical
     {
 
-        public CompleteLinkageHierarchical(MainProgramClass main) : base(main)
-        {
-
-        }
-        //public override void Clustering()
-        //{
-
-        //}
+        public CompleteLinkageHierarchical(MainProgramClass main) : base(main) { }
+  
         public override double Linkage(Cluster cluster1, Cluster cluster2)
         {
             double clusterDistance = 0;

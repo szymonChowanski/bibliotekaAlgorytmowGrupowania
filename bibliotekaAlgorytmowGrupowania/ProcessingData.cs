@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace ProjektInżynierski
 {
     public enum DistanceAlgorithm { Euclidean, SquaredEuclidean, Manhattan, Maximum};
+
     public class ProcessingData
     {
         public int PointsQuantity=0;
@@ -21,9 +22,6 @@ namespace ProjektInżynierski
         public int NeighborsToExamine = 0;
         public int NeighborsInCommon = 0;
         public DistanceAlgorithm distanceAlgorithm = DistanceAlgorithm.Euclidean;
-
-        
-
     }
 
    

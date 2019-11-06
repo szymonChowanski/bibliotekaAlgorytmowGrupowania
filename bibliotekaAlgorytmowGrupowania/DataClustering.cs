@@ -10,8 +10,6 @@ namespace ProjektInżynierski
     delegate void myDelegate(string message);
     public abstract class DataClustering
     {
-        
-
         protected List<Cluster> clusters = new List<Cluster>();
         protected MainProgramClass main;
         public bool Finished { get; set; }
@@ -19,18 +17,6 @@ namespace ProjektInżynierski
         public List<Cluster> Clusters { get => clusters; set => clusters = value; }
 
         public abstract void Clustering();
-        //public double Distance(DataPoint point1, DataPoint point2)
-        //{
-        //    double result = 0;
-        //    for (int i = 0; i < point1.Coordinates.Count; i++)
-        //    {
-        //        result += Math.Pow(point2.Coordinates[i] - point1.Coordinates[i], 2);
-        //    }
-        //    return Math.Sqrt(result);
-
-        //}
-
-
 
         public double Distance(DataPoint point1, DataPoint point2)
         {
@@ -51,7 +37,6 @@ namespace ProjektInżynierski
             //}
             return EuclideanDistance(point1, point2);
         }
-
 
 
         public double SquaredEuclideanDistance(DataPoint point1, DataPoint point2)
@@ -107,10 +92,7 @@ namespace ProjektInżynierski
             {
                 tmp[i] /= cluster.Points.Count;
             }
-            return new DataPoint(tmp);
-            
+            return new DataPoint(tmp);        
         }
-
-
     }
 }
