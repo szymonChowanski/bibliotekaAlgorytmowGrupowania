@@ -10,6 +10,8 @@
 
         <Button x:Name="NextStepButton" Content="Kolejna iteracja" HorizontalAlignment="Left" Margin="269,636,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.8,15.6" Click="NextStepButton_Click"/>
         <StackPanel x:Name="ImageStackPanel" HorizontalAlignment="Left" Height="631" VerticalAlignment="Top" Width="620"/>
+        <Button x:Name="SkipButton" Content="Pomiń x iteracji" HorizontalAlignment="Left" Margin="374,636,0,0" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.8,15.6" Click="SkipButton_Click"/>
+        <TextBox x:Name="HowManyToSkipTextBox" HorizontalAlignment="Left" Height="23" Margin="488,637,0,0" TextWrapping="Wrap" Text="Ile iteracji pominąć?" VerticalAlignment="Top" Width="114" PreviewMouseDown="TextBox_Click"/>
     </Grid>
 
 

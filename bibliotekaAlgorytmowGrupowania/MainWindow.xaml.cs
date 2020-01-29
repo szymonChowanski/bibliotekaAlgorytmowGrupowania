@@ -181,8 +181,10 @@ namespace ProjektInżynierski
 
         private void FileOpen(ref string processingDataReference, string filter)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = filter;
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = filter
+            };
 
             if (openFileDialog.ShowDialog() == true)
             {
@@ -253,9 +255,17 @@ namespace ProjektInżynierski
         public static void ShowMessage(string message) => MessageBox.Show(message);
 
         private void DimensionTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {            
-            if (int.Parse(DimensionTextBox.Text) == 2)
-                VisualisationCheckbox.IsEnabled = true;
-        }       
+        {
+            try
+            {
+                if (int.Parse(DimensionTextBox.Text) == 2)
+                    VisualisationCheckbox.IsEnabled = true;
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Proszę wpisać liczbę całkowitą");
+                return;
+            } 
+        }  
     }
 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjektInżynierski
+namespace ClusteringLibrary
 {
 
-    
+    delegate void myDelegate(string message);
     public abstract class DataClustering
     {
         protected List<Cluster> clusters = new List<Cluster>();

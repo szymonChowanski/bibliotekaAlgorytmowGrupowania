@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Drawing;
 
-namespace ProjektInżynierski
+namespace ClusteringLibrary
 {
     public class MainProgramClass
     {
@@ -147,17 +147,14 @@ namespace ProjektInżynierski
         {
             Bitmap bitmap = new Bitmap(processingData.InputFilePath);
             Color tmpColor;
-            int index = 0;
+
             for(int y = 0;y<bitmap.Height;y++)
             {
                 for (int x = 0; x < bitmap.Height; x++)
                 {
                     tmpColor=bitmap.GetPixel(x, y);
                     if ((tmpColor.R != 255) && (tmpColor.G != 255) && (tmpColor.B != 255))
-                    {
                         Points.Add(new DataPoint(x, y));
-                        Points[index].Index = index++;
-                    }                
                 }
             }
         }

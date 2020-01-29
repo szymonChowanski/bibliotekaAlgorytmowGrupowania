@@ -24,20 +24,20 @@ namespace ProjektInżynierski
         GeometryDrawing coordinatesDrawing = new GeometryDrawing();
         //List<Cluster> clusters;
         DataClustering dataClustering;
-        int iteration = 0;
+
 
         public WindowToDraw(DataClustering clustering)
         {
             InitializeComponent();
             dataClustering = clustering;
             SetTitle();
-            drawStart();
-            drawPoints();
-            drawFinish();
+            DrawStart();
+            DrawPoints();
+            DrawFinish();
 
         }
 
-        Point toChartPoint(double oldX, double oldY)
+        Point ToChartPoint(double oldX, double oldY)
         {
             double newX = oldX + 20;
             double newY = 600 - oldY;
@@ -45,16 +45,16 @@ namespace ProjektInżynierski
             Point result = new Point(newX, newY);
             return result;
         }
-        Point toChartPoint(DataPoint oldPoint)
+        Point ToChartPoint(DataPoint oldPoint)
         {
             //Point newPoint = new Point(oldPoint.Coordinates[0] + 20, 600 - oldPoint.Coordinates[1]);
             Point newPoint = new Point(oldPoint.Coordinates[0] + 20, oldPoint.Coordinates[1]);
             return newPoint;
         }
-        void drawStart()
+        void DrawStart()
         {
             MyColors.Counter = 0;
-            
+
             GeometryGroup coordinates = new GeometryGroup();
             coordinates.Children.Add(new LineGeometry(new Point(0, 600), new Point(620, 600)));
             coordinates.Children.Add(new LineGeometry(new Point(20, 0), new Point(20, 620)));
@@ -65,11 +65,11 @@ namespace ProjektInżynierski
             Point from, to;
             for (int i = 0; i < 600; i += 25)
             {
-                from = toChartPoint(-5, i);
-                to = toChartPoint(0, i);
+                from = ToChartPoint(-5, i);
+                to = ToChartPoint(0, i);
                 coordinates.Children.Add(new LineGeometry(from, to));
-                from = toChartPoint(i, 0);
-                to = toChartPoint(i, -5);
+                from = ToChartPoint(i, 0);
+                to = ToChartPoint(i, -5);
                 coordinates.Children.Add(new LineGeometry(from, to));
 
             }
@@ -78,21 +78,26 @@ namespace ProjektInżynierski
             coordinatesDrawing.Pen = new Pen(Brushes.Black, 1);
             coordinatesDrawing.Freeze();
             drawingGroup.Children.Add(coordinatesDrawing);
-
+            DataClustering data = dataClustering as Hierarchical;
+            if (data == null)
+            {
+                SkipButton.Visibility = Visibility.Collapsed;
+                HowManyToSkipTextBox.Visibility = Visibility.Collapsed;
+            }
 
         }
 
-        void drawPoints()
+        void DrawPoints()
         {
             List<GeometryDrawing> pointsDrawingList = new List<GeometryDrawing>();
             List<GeometryGroup> pointsGeometryList = new List<GeometryGroup>();
             foreach (Cluster cluster in dataClustering.Clusters)
             {
-                if(cluster.ColorOnChart==Colors.White)
+                if (cluster.ColorOnChart == Colors.White)
                     cluster.SetColor();
                 foreach (DataPoint point in cluster.Points)
                 {
-                    point.ChartPoint = toChartPoint(point);
+                    point.ChartPoint = ToChartPoint(point);
                 }
             }
 
@@ -115,13 +120,13 @@ namespace ProjektInżynierski
 
             //centroidy
             DataClustering tmp = dataClustering as KMeans;
-            if (tmp!=null)
+            if (tmp != null)
             {
                 pointsDrawingList.Add(new GeometryDrawing());
                 pointsGeometryList.Add(new GeometryGroup());
                 foreach (Cluster cluster in dataClustering.Clusters)
                 {
-                    cluster.Centroid.ChartPoint = toChartPoint(cluster.Centroid);
+                    cluster.Centroid.ChartPoint = ToChartPoint(cluster.Centroid);
                     pointsGeometryList[listcounter].Children.Add(new LineGeometry(new Point(cluster.Centroid.ChartPoint.X - 5, cluster.Centroid.ChartPoint.Y - 5), new Point(cluster.Centroid.ChartPoint.X + 5, cluster.Centroid.ChartPoint.Y + 5)));
                     pointsGeometryList[listcounter].Children.Add(new LineGeometry(new Point(cluster.Centroid.ChartPoint.X - 5, cluster.Centroid.ChartPoint.Y + 5), new Point(cluster.Centroid.ChartPoint.X + 5, cluster.Centroid.ChartPoint.Y - 5)));
 
@@ -136,18 +141,23 @@ namespace ProjektInżynierski
             }
         }
 
-        void drawFinish()
+        void DrawFinish()
         {
-           
+
             DrawingImage drawingImage = new DrawingImage(drawingGroup);
-            Image image = new Image();
-            image.Source = drawingImage;
-            image.Stretch = Stretch.None;
-            image.HorizontalAlignment = HorizontalAlignment.Left;
-            image.VerticalAlignment = VerticalAlignment.Top;
+            Image image = new Image
+            {
+                Source = drawingImage,
+                Stretch = Stretch.None,
+                HorizontalAlignment = HorizontalAlignment.Left,
+                VerticalAlignment = VerticalAlignment.Top
+            };
             //this.Content = image;
-            if(dataClustering.Finished)
+            if (dataClustering.Finished)
+            {
                 NextStepButton.Visibility = Visibility.Collapsed;
+                SkipButton.Visibility = Visibility.Collapsed;
+            }
             //BitmapImage bitmapImage = new BitmapImage();
             //bitmapImage.
             ImageStackPanel.Children.Clear();
@@ -155,14 +165,14 @@ namespace ProjektInżynierski
             //ChartImage = image;
             //ChartImage.UpdateLayout();  
         }
-        
 
-        public void drawAndDisplay()
+
+        public void DrawAndDisplay()
         {
             drawingGroup.Children.Clear();
             drawingGroup.Children.Add(coordinatesDrawing);
-            drawPoints();
-            drawFinish();
+            DrawPoints();
+            DrawFinish();
         }
 
         public void SetTitle()
@@ -173,24 +183,54 @@ namespace ProjektInżynierski
                                             dataClustering as AverageLinkageHierarchical,
                                             dataClustering as CompleteLinkageHierarchical};
             Title = "Wizualizacja algorytmu ";
-            if (algorithms[0]!=null) Title += "k-średnich";
+            if (algorithms[0] != null) Title += "k-średnich";
             else if (algorithms[1] != null) Title += "Jarvisa-Patricka";
             else if (algorithms[2] != null) Title += "hierarchiczny aglomeracyjny z miarą odległości single-link";
             else if (algorithms[3] != null) Title += "hierarchiczny aglomeracyjny z miarą odległości average-link";
-            else  Title += "hierarchiczny aglomeracyjny z miarą odległości complete-link";
+            else Title += "hierarchiczny aglomeracyjny z miarą odległości complete-link";
         }
 
         private void NextStepButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            if(!dataClustering.Finished)
+
+            if (!dataClustering.Finished)
             {
                 dataClustering.Clustering();
-                drawAndDisplay();
+                DrawAndDisplay();
             }
-            if (dataClustering.Finished)
-                NextStepButton.Visibility = Visibility.Collapsed;
-            
+            //if (dataClustering.Finished)
+            //{
+            //    NextStepButton.Visibility = Visibility.Collapsed;
+            //    SkipButton.Visibility = Visibility.Collapsed;
+            //}
+        }
+
+        private void SkipButton_Click(object sender, RoutedEventArgs e)
+        {
+            int SkipCounter;
+            try
+            {
+                SkipCounter = int.Parse(HowManyToSkipTextBox.Text);
+            }
+            catch (FormatException)
+            {
+                MessageBox.Show("Proszę podać liczbę całkowitą");
+                return;
+            }
+
+            for (int i = 0; i < SkipCounter; i++)
+            {
+                dataClustering.Clustering();
+                DrawAndDisplay();
+                if (dataClustering.Finished)
+                    break;
+            }
+
+        }
+
+        private void TextBox_Click(object sender, RoutedEventArgs e)
+        {
+            HowManyToSkipTextBox.Text = String.Empty;
         }
     }
 }
