@@ -142,7 +142,7 @@ namespace Clustering
             if ((AinB) && (BinA))
                 commonNeighbors++;
 
-            if (commonNeighbors >= ProcessingData.NeighborsInCommon)
+            if (commonNeighbors >= ProcessingData.RequiredNeighbors)
                 return true;
             else return false;
         }

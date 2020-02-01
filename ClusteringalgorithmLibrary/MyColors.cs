@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClusteringLibrary
-{ 
+namespace Clustering
+{
     public static class MyColors
     {
         public static String[] Colors = new String[]

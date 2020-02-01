@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 
 
-namespace ProjektInżynierski
+namespace Clustering
 {
     class AverageLinkageHierarchical : Hierarchical
     {
 
-        public AverageLinkageHierarchical(MainProgramClass main) : base(main)
+        public AverageLinkageHierarchical(List<DataPoint> dataPoints, ProcessingData data) : base(dataPoints, data)
         {
 
         }

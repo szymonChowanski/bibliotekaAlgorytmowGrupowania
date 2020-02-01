@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 
+
 namespace Clustering
 {
     
@@ -94,7 +95,7 @@ namespace Clustering
             if (JarvisPatrickCheckbox.IsChecked == true)
                 try
                 {
-                    main.processingData.NeighborsInCommon = int.Parse(NeighborsInCommonTextBox.Text);
+                    main.processingData.RequiredNeighbors = int.Parse(NeighborsInCommonTextBox.Text);
                     main.processingData.NeighborsToExamine = int.Parse(NeighborsToExamineTextBox.Text);
                 }
                 catch (FormatException)

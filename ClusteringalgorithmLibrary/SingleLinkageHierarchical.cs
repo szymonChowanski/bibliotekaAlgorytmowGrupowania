@@ -5,19 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ClusteringLibrary
+namespace Clustering
 {
-    class SingleLinkageHierarchical : Hierarchical
+    public class SingleLinkageHierarchical : Hierarchical
     {
 
-        public SingleLinkageHierarchical(MainProgramClass main) : base(main)
+        public SingleLinkageHierarchical(List<DataPoint> dataPoints, ProcessingData data) : base(dataPoints, data)
         {
 
         }
-        //public override void Clustering()
-        //{
-
-        //}
+        
         public override double Linkage(Cluster cluster1, Cluster cluster2)
         {
             double clusterDistance = double.MaxValue;

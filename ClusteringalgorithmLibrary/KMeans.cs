@@ -5,20 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace ClusteringLibrary
-{
+namespace Clustering
+{ 
     public class KMeans : DataClustering
     {
-        public KMeans(MainProgramClass Main)
+        public KMeans(List<DataPoint> dataPoints, ProcessingData data):base(dataPoints,data)
         {
-            main = Main;
+            
             DataPoint tmp = new DataPoint();
             Thread.Sleep(20);
             Random rand = new Random((int)DateTime.Now.Ticks & 0x0000FFFF);
 
-            for (int i = 0; i < main.processingData.GroupsQuantity; i++)
+            for (int i = 0; i < ProcessingData.GroupsQuantity; i++)
             {
-                for (int j = 0; j < main.processingData.dimensionQuantity; j++)
+                for (int j = 0; j < ProcessingData.dimensionQuantity; j++)
                 {
                     tmp.Coordinates.Add((rand.Next(0, 60001)) / (double)100);
                 }
@@ -30,10 +30,7 @@ namespace ClusteringLibrary
         public override void Clustering()
         {
             if (Assign())
-            {
-                Finished = false;
                 Update();
-            }
             else Finished = true;
         }
 
@@ -47,7 +44,7 @@ namespace ClusteringLibrary
             }
             int closestCluster;
             bool result = false;
-            foreach (DataPoint point in main.Points)
+            foreach (DataPoint point in Points)
             {
                 closestCluster = 0;
                 for (int i = 1; i < clusters.Count; i++)

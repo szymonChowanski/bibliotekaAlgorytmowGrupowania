@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace ProjektInżynierski
+namespace Clustering
 {
     public class Cluster
     {

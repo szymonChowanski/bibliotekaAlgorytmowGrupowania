@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjektInżynierski
+namespace Clustering
 {
     public abstract class Hierarchical : DataClustering 
     {
         public List<List<Cluster>> clusterHistory = new List<List<Cluster>>();
 
 
-        public Hierarchical(MainProgramClass main)
+        public Hierarchical(List<DataPoint> dataPoints, ProcessingData data) : base(dataPoints, data)
         {
             clusterHistory.Add(new List<Cluster>());
-            foreach (DataPoint point in main.Points)
+            foreach (DataPoint point in Points)
             {
                 clusters.Add(new Cluster());
                 clusters[clusters.Count - 1].Points.Add(point);

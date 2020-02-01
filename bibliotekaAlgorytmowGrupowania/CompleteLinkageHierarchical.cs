@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ProjektInżynierski
+namespace Clustering
 {
     class CompleteLinkageHierarchical : Hierarchical
     {
 
-        public CompleteLinkageHierarchical(MainProgramClass main) : base(main) { }
+        public CompleteLinkageHierarchical(List<DataPoint> dataPoints, ProcessingData data) : base(dataPoints, data) { }
   
         public override double Linkage(Cluster cluster1, Cluster cluster2)
         {

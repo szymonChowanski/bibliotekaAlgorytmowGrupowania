@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Drawing;
 
-namespace ProjektInżynierski
+namespace Clustering
 {
     public class MainProgramClass
     {
@@ -48,19 +48,19 @@ namespace ProjektInżynierski
                     switch(i)
                     {
                         case 0:
-                            algorithmList.Add(new KMeans(this));
+                            algorithmList.Add(new KMeans(points,processingData));
                             break;
                         case 1:
-                            algorithmList.Add(new SingleLinkageHierarchical(this));
+                            algorithmList.Add(new SingleLinkageHierarchical(points, processingData));
                             break;
                         case 2:
-                            algorithmList.Add(new JarvisPatrick(this));
+                            algorithmList.Add(new JarvisPatrick(points, processingData));
                             break;
                         case 3:
-                            algorithmList.Add(new CompleteLinkageHierarchical(this));
+                            algorithmList.Add(new CompleteLinkageHierarchical(points, processingData));
                             break;
                         case 4:
-                            algorithmList.Add(new AverageLinkageHierarchical(this));
+                            algorithmList.Add(new AverageLinkageHierarchical(points, processingData));
                             break;
                     }
                 }

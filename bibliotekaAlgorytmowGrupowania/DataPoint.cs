@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ProjektInżynierski
+
+namespace Clustering
 {
     public class DataPoint
     {

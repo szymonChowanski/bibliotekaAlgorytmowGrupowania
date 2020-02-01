@@ -5,17 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace ClusteringLibrary
+namespace Clustering
 {
     public class Cluster
     {
         private Color _colorOnChart = Colors.White;
 
         private List<DataPoint> _points = new List<DataPoint>();
-        internal List<DataPoint> Points { get => _points; set => _points = value; }
+        public List<DataPoint> Points { get => _points; set => _points = value; }
 
         private DataPoint _centroid = new DataPoint();
-        internal DataPoint Centroid { get => _centroid; set => _centroid = value; }
+        public DataPoint Centroid { get => _centroid; set => _centroid = value; }
 
         public Color ColorOnChart { get => _colorOnChart; set => _colorOnChart = value; }
         

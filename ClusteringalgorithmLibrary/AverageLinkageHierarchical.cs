@@ -5,25 +5,32 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace ClusteringLibrary
+
+
+namespace Clustering
 {
-    class CompleteLinkageHierarchical : Hierarchical
+    public class AverageLinkageHierarchical : Hierarchical
     {
 
-        public CompleteLinkageHierarchical(MainProgramClass main) : base(main) { }
-  
+        public AverageLinkageHierarchical(List<DataPoint> dataPoints, ProcessingData data) : base(dataPoints, data)
+        {
+
+        }
+
         public override double Linkage(Cluster cluster1, Cluster cluster2)
         {
             double clusterDistance = 0;
+            int counter = 0;
             foreach (DataPoint point1 in cluster1.Points)
             {
                 foreach (DataPoint point2 in cluster2.Points)
                 {
-                    if (Distance(point1, point2) > clusterDistance)
-                        clusterDistance = Distance(point1, point2);
+                    
+                    clusterDistance += Distance(point1, point2);
+                    counter++;
                 }
             }
-            return clusterDistance;
+            return clusterDistance/counter;
         }
 
     }

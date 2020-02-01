@@ -4,18 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClusteringLibrary
+namespace Clustering
 {
 
-    delegate void myDelegate(string message);
+    
     public abstract class DataClustering
     {
         protected List<Cluster> clusters = new List<Cluster>();
-        protected MainProgramClass main;
+        //protected MainProgramClass main;
         public bool Finished { get; set; }
-
+        private List<DataPoint> points;
+        
         public List<Cluster> Clusters { get => clusters; set => clusters = value; }
+        private ProcessingData processingData;
+        protected List<DataPoint> Points { get => points; set => points = value; }
+        protected ProcessingData ProcessingData { get => processingData; set => processingData = value; }
 
+        public DataClustering(List<DataPoint> dataPoints, ProcessingData data)
+        {
+            points = dataPoints;
+            ProcessingData = data;
+        }
         public abstract void Clustering();
 
         public double Distance(DataPoint point1, DataPoint point2)
@@ -75,7 +84,7 @@ namespace ClusteringLibrary
         public DataPoint Mean(Cluster cluster)
         {
             List<double> tmp = new List<double>();
-            for (int i = 0; i < main.processingData.dimensionQuantity; i++)
+            for (int i = 0; i < ProcessingData.dimensionQuantity; i++)
             {
                 tmp.Add(new double());
                 tmp[i] = 0;
