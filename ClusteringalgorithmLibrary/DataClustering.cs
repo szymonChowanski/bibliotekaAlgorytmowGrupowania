@@ -25,7 +25,17 @@ namespace Clustering
             points = dataPoints;
             ProcessingData = data;
         }
-        public abstract void Clustering();
+        public abstract void ClusteringStep();
+
+        public List<Cluster> Clustering()
+        {
+            while(!Finished)
+            {
+                ClusteringStep();
+            }
+            return Clusters;
+        }
+        
 
         public double Distance(DataPoint point1, DataPoint point2)
         {

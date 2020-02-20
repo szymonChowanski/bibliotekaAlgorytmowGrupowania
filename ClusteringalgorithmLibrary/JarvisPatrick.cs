@@ -37,7 +37,7 @@ namespace Clustering
                 }
             }
         }
-        public override void Clustering()
+        public override void ClusteringStep()
         {
            foreach(DataPoint point in Points)
            {

@@ -16,10 +16,10 @@ namespace ConsoleTestApp
             //...
             AverageLinkageHierarchical aLH = new AverageLinkageHierarchical(dataPoints, processingData);
             while (aLH.Finished != true)
-                aLH.Clustering();
+                aLH.ClusteringStep();
 
             JarvisPatrick jP = new JarvisPatrick(dataPoints, processingData);
-                jP.Clustering();
+                jP.ClusteringStep();
           
         }
     }

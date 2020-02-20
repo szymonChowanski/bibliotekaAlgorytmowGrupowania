@@ -25,7 +25,7 @@ namespace Clustering
 
         public abstract double Linkage(Cluster cluster1, Cluster cluster2);
 
-        public override void Clustering()
+        public override void ClusteringStep()
         {
             double clusterDistance= double.MaxValue;
             int closesti=0, closestj=1;
@@ -42,7 +42,7 @@ namespace Clustering
                     }
                 }
             }
-
+            
             foreach(DataPoint point in clusters[closestj].Points)
             {
                 clusters[closesti].Points.Add(point);

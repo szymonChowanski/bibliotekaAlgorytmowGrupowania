@@ -27,7 +27,7 @@ namespace Clustering
             }
         }
 
-        public override void Clustering()
+        public override void ClusteringStep()
         {
             if (Assign())
                 Update();

@@ -158,6 +158,8 @@ namespace Clustering
             {
                 NextStepButton.Visibility = Visibility.Collapsed;
                 SkipButton.Visibility = Visibility.Collapsed;
+                HowManyToSkipTextBox.Visibility = Visibility.Collapsed;
+                WriteToFile.Algorithm(dataClustering);
             }
             //BitmapImage bitmapImage = new BitmapImage();
             //bitmapImage.
@@ -196,7 +198,10 @@ namespace Clustering
 
             if (!dataClustering.Finished)
             {
-                dataClustering.Clustering();
+                dataClustering.ClusteringStep();
+                DataClustering hierarchical = dataClustering as Hierarchical;
+                //if (hierarchical != null)
+                    //WriteToFile.Algorithm(dataClustering);
                 DrawAndDisplay();
             }
             //if (dataClustering.Finished)
@@ -221,12 +226,16 @@ namespace Clustering
 
             for (int i = 0; i < SkipCounter; i++)
             {
-                dataClustering.Clustering();
-                DrawAndDisplay();
+                dataClustering.ClusteringStep();
+               
+                
                 if (dataClustering.Finished)
                     break;
             }
-
+            MyColors.Counter = 0;
+            foreach (Cluster cluster in dataClustering.Clusters)
+                cluster.SetColor();
+            DrawAndDisplay();
         }
 
         private void TextBox_Click(object sender, RoutedEventArgs e)

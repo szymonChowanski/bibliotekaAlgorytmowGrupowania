@@ -71,7 +71,7 @@ namespace Clustering
             {
                 DataClustering data = algorithm as Hierarchical;
                 if (data == null)
-                    algorithm.Clustering();
+                    algorithm.ClusteringStep();
 
                 if ((processingData.Visualization == true) && (processingData.dimensionQuantity == 2))
                 {
@@ -79,12 +79,14 @@ namespace Clustering
                     visualisationWindow.Show();
                 }
                 else
-                    while(algorithm.Finished != true)
+                {
+                    while (algorithm.Finished != true)
                     {
-                        algorithm.Clustering();
+                        algorithm.ClusteringStep();
                     }
 
-                WriteToFile.Algorithm(algorithm);
+                    WriteToFile.Algorithm(algorithm);
+                }
             }
         }
 
